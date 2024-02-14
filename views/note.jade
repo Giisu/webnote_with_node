@@ -1,0 +1,42 @@
+doctype html
+html(lang="kor")
+    head 
+        meta(charset="utf-8")
+        link(rel="stylesheet", href="style.css")
+        //- script(src="script.js", type="text/javascript") 
+    body 
+        div(class="window")
+            main(class="sidebar")
+                section(style="display: flex")
+                    form(action="/note") 
+                        input(list = "tag", id="search", style="flex:70%", onfocus="this.value=''")
+                        datalist(id="tag")
+                            -for(let i=0;i<data.length;i++) 
+                                option(value=data[i].name)=data[i].name
+                        button(style="flex:30%", id="searchBtn", onclock="loadingMain()" type="submit" ) 검색 
+                section(class="checkbox")
+                    input(id="chk_html", type="checkbox")
+                    label(for="chk_html") HTML                       
+                section(class="checkbox")
+                    input(id="chk_css", type="checkbox")
+                    label(for="chk_css") CSS                     
+                section(class="checkbox")
+                    input(id="chk_js", type="checkbox")
+                    label(for="chk_js") JS                  
+                button(id="editButton", onclick="editButtonClicked(event)") 편집
+                p=data[0].name
+            main(class="main")
+                section(class="description", style="flex:70%; width:100%")
+                    h1(id="name", class="temp")=data[index].name
+                    h3(id="gram", class="temp")=data[index].gram
+                    p(id="desc", class="temp")=data[index].desc
+                    p 
+                        a(href="javascript:void(0)" class="display" id="property") property
+                    p
+                        a(href="javascript:void(0)" class="display" id="sample") sample
+                    p
+                        a(href="javascript:void(0)" class="display" id="externalLink") externalLink
+                section(style="display:flex; flex-direction:column; flex:30%; width:100%") 
+                    iframe(src="", frameborder="0", class="example", id="iframe", style="flex:50%")
+                    div(id="popUpDescription", style="flex:50%", class="temp") 예제 들어갈 곳 예제 들어갈 곳 예제 들어갈 곳
+                 
