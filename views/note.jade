@@ -3,17 +3,16 @@ html(lang="kor")
     head 
         meta(charset="utf-8")
         link(rel="stylesheet", href="style.css")
-        //- script(src="script.js", type="text/javascript") 
     body 
         div(class="window")
             main(class="sidebar")
                 section(style="display: flex")
                     form(action="/note") 
-                        input(list = "tag", id="search", style="flex:70%", onfocus="this.value=''")
+                        input(list = "tag", id="search", style="flex:70%", onfocus="this.value=''", name="search")
                         datalist(id="tag")
                             -for(let i=0;i<data.length;i++) 
                                 option(value=data[i].name)=data[i].name
-                        button(style="flex:30%", id="searchBtn", onclock="loadingMain()" type="submit" ) 검색 
+                        button(style="flex:30%", id="searchBtn", type="submit" ) 검색 
                 section(class="checkbox")
                     input(id="chk_html", type="checkbox")
                     label(for="chk_html") HTML                       
@@ -22,9 +21,10 @@ html(lang="kor")
                     label(for="chk_css") CSS                     
                 section(class="checkbox")
                     input(id="chk_js", type="checkbox")
-                    label(for="chk_js") JS                  
-                button(id="editButton", onclick="editButtonClicked(event)") 편집
-                p=data[0].name
+                    label(for="chk_js") JS
+                //- form(action=`/note`)
+                //-     input(type="hidden", value="edit" name='edit')
+                button(id="editButton") edit
             main(class="main")
                 section(class="description", style="flex:70%; width:100%")
                     h1(id="name", class="temp")=data[index].name
@@ -39,4 +39,5 @@ html(lang="kor")
                 section(style="display:flex; flex-direction:column; flex:30%; width:100%") 
                     iframe(src="", frameborder="0", class="example", id="iframe", style="flex:50%")
                     div(id="popUpDescription", style="flex:50%", class="temp") 예제 들어갈 곳 예제 들어갈 곳 예제 들어갈 곳
+        script(src="scriptnode.js", type="text/javascript") 
                  

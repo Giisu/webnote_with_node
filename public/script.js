@@ -1,16 +1,6 @@
 let names = [];
-const searchbar = document.getElementById("search");
 const searchBtn = document.getElementById("searchBtn");
 let list = document.getElementById("tag");
-for (let i = 0; i < data.length; i++) {
-  let dataForname;
-  dataForname = data[i].name;
-  names.push(dataForname);
-  let option = document.createElement("option");
-  option.value = dataForname;
-  option.textContent = option.value;
-  list.appendChild(option);
-}
 let searchInput;
 let target;
 let clicked;
@@ -50,6 +40,7 @@ function loadingSide(clicked) {
       break;
   }
 }
+
 function popUpProperty() {
   $iframe.style.display = "none";
   $example.style.display = "block";
@@ -66,11 +57,8 @@ function popUpExternalLink() {
   $iframe.style.display = "block";
   $iframe.src = target.link;
 }
-function loadingMain() {
-  $keyname.textContent = target.name;
-  $gram.textContent = target.gram;
-  $explain.textContent = target.desc;
-}
+
+let searchbar = document.getElementById("search");
 function editMod() {
   searchbar.readOnly = true;
   for (let i = 0; i < 4; i++) {
@@ -107,23 +95,23 @@ function editModExit() {
   }
 }
 
-const onInput = (event) => {
-  searchInput = event.target.value;
-  console.log(searchInput);
-  target = data.find((target) => target.name === searchInput);
-  index = data.findIndex((target) => target.name === searchInput);
-  console.log(index);
-};
+// const onInput = (event) => {
+//   searchInput = event.target.value;
+//   console.log(searchInput);
+//   target = data.find((target) => target.name === searchInput);
+//   index = data.findIndex((target) => target.name === searchInput);
+//   console.log(index);
+// };
 const onClickEditable = (event) => {
   onEditSelectedOb = event.target;
   editTargetId = onEditSelectedOb.id;
   editTextMemory = target[editTargetId];
-  onEditSelectedOb.style.display = "none";
   let parent = onEditSelectedOb.parentNode;
   let textarea = document.createElement("textarea");
   textarea.id = "nowOnEdit";
   textarea.textContent = editTextMemory;
-  parent.appendChild(textarea);
+  parent.appendChild(textarea).before(object);
+  onEditSelectedOb.style.display = "none";
   let input = document.createElement("input");
   input.value = "저장";
   input.style.width = "50px";
@@ -141,7 +129,6 @@ const onClickEditable = (event) => {
   };
   parent.appendChild(input);
 };
-searchbar.addEventListener("input", onInput);
 
 // function saveChange(self) {
 //   self.editTextMemory = self.textarea.textContent;

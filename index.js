@@ -8,23 +8,24 @@ import fs from "fs";
 import bodyParser from "body-parser";
 import dataObject from "./data/data.json" assert { type: "json" };
 const jsonFile = fs.readFileSync("data/data.json", "utf-8");
+const filename = "data/data.json";
 // readfile은 직렬화된 데이터
 const jsonData = JSON.parse(jsonFile);
-const data = jsonData.datas;
+///////////////////JSON파일 수정//////////////////////
+
+// if(jsonData[index].keyAnchor !== "test") {
+//   jsonData[1].name = "test";
+//   console.log(jsonData[0].name);
+//   fs.writeFileSync("data/data2.json", JSON.stringify(jsonData, null, 2));
+// }
+
+/////////////////////////////////////////////////////
+
 let index = 0;
-//////////////////////////////
-// const stringData = JSON.stringify(jsonFile);
-// console.log(stringData);
-// const text = "테스트용";
-// Data[0].name = text;
-// console.log(stringData[0].name);
-// fs.writeFile("data/data.json", data, "utf-8", function (err) {
-//   console.log("쓰기작업 완료");
-// });
-//////////////////////////////
-// const datas = JSON.parse(fs.readFileSync("./data/data.json", "utf-8"));
-// console.log(datas);
-// console.log(typeof datas);
+let newText;
+let existingText;
+let editMode = false;
+let keyAnchor;
 const app = express();
 // const htmlpath = path.resolve(__dirname + "/public/note.html");
 // const datapath = path.resolve(__dirname + "/data/data.json");
@@ -38,20 +39,33 @@ app.use(express.static("public"));
 app.listen(3000, function () {
   console.log("connected port 3000");
 });
-app.get(["/note"], function (req, res) {
-  let itemName = req.body.name;
-  //   fs.readFile("public/note.html", function (err, data) {
-  //     if (err) {
-  //       console.log(err);
-  //       return res.status(500).send("error");
-  //     }
-  //     res.writeHead(200, { "Content-Type": "text/html" });
-  //     res.end(data);
-  //   });
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].name === itemName) {
+app.get(["/note", "/note/:search"], function (req, res) {
+  let itemName = req.query.search;
+
+  for (let i = 0; i < jsonData.length; i++) {
+    if (jsonData[i].name === itemName) {
       index = i;
     }
   }
-  res.render("note.jade", { data: data, index: index });
+
+  res.render("note.jade", { data: jsonData, index: index });
 });
+
+app.post("/edit", function (req, res) {
+  newText = req.body.newText;
+  existingText = req.body.existingText;
+  for (let key in jsonData[index]) {
+    if (existingText === jsonData[index][key]) {
+      keyAnchor = key;
+    }
+  }
+
+  jsonData[index][keyAnchor] = newText;
+  fs.writeFileSync("data/data.json", JSON.stringify(jsonData, null, 2));
+
+  res.redirect(`/note?search=${jsonData[index].name}`);
+});
+
+// Object.keys(jsonData[index]).forEach((value) => {
+//   console.log(value[value]);
+// });
