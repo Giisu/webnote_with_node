@@ -1,12 +1,9 @@
 [
   {
-    "name": "h tags",
-    "gram": "<h1>CONTENTS</h1>, <h2>CONTENTS</h2> ``` ",
-    "desc": "머릿말에 해당하는 태그. 숫자가 클수록 글자크기는 작음",
-    "property": "color, background-color, text-align, text-decoration ```",
-    "sample": "",
-    "link": "",
-    "undefined": "label test"
+    "name": "name...",
+    "desc": "desc...",
+    "gram": "gram...",
+    "property": "popUpDescription..."
   },
   {
     "name": "p",
@@ -167,7 +164,7 @@
     "pairtag": ""
   },
   {
-    "name": "textarea",
+    "name": "textarea aaa",
     "gram": "<textarea></textarea>",
     "desc": "여러줄의 텍스트. cols, rows로 문자열 길이만큼 생성 가능하나 일반적으로 style width로 지정",
     "property": "cols=num, rows=num",
@@ -363,5 +360,11 @@
     "sample": "",
     "link": "",
     "pairtag": ""
+  },
+  {
+    "name": "name...",
+    "desc": "desc...",
+    "gram": "gram...",
+    "property": "popUpDescription..."
   }
 ]

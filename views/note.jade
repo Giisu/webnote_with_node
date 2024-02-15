@@ -6,6 +6,7 @@ html(lang="kor")
     body 
         div(class="window")
             main(class="sidebar")
+                a(href="/note", type="button") Home
                 section(style="display: flex")
                     form(action="/note") 
                         input(list = "tag", id="search", style="flex:70%", onfocus="this.value=''", name="search")
@@ -25,8 +26,14 @@ html(lang="kor")
                 //- form(action=`/note`)
                 //-     input(type="hidden", value="edit" name='edit')
                 button(id="editButton") edit
+                button(id="new") new
+                //- form(action="/delete") 
+                button(id="delete", value=`${data[index].name}`) delete
+                button(id="getSize") size
+                textarea(id="getSize" rows=10) 
+                p(id="showSize")
             main(class="main")
-                section(class="description", style="flex:70%; width:100%")
+                section(class="description")
                     h1(id="name", class="temp")=data[index].name
                     h3(id="gram", class="temp")=data[index].gram
                     p(id="desc", class="temp")=data[index].desc
@@ -36,8 +43,9 @@ html(lang="kor")
                         a(href="javascript:void(0)" class="display" id="sample") sample
                     p
                         a(href="javascript:void(0)" class="display" id="externalLink") externalLink
-                section(style="display:flex; flex-direction:column; flex:30%; width:100%") 
-                    iframe(src="", frameborder="0", class="example", id="iframe", style="flex:50%")
-                    div(id="popUpDescription", style="flex:50%", class="temp") 예제 들어갈 곳 예제 들어갈 곳 예제 들어갈 곳
+                //- section(id="division" width="1px" style="background-color: rgb(134, 125, 115); border: 1px solid black;" class="resize")        
+                section(class="example") 
+                    iframe(src="", frameborder="0", id="iframe", style="flex:50%")
+                    div(id="popUpDescription", style="flex:50%", class="temp")=data[index].property
         script(src="scriptnode.js", type="text/javascript") 
                  

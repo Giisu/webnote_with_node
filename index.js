@@ -51,6 +51,23 @@ app.get(["/note", "/note/:search"], function (req, res) {
   res.render("note.jade", { data: jsonData, index: index });
 });
 
+app.post("/new", (req, res) => {
+  let name = req.body.name;
+  let desc = req.body.desc;
+  let gram = req.body.gram;
+  let popUpDescription = req.body.popUpDescription;
+  let newData = {
+    name: name,
+    desc: desc,
+    gram: gram,
+    property: popUpDescription,
+  };
+  jsonData.push(newData);
+  fs.writeFileSync("data/data.json", JSON.stringify(jsonData, null, 2));
+  index = jsonData.length - 1;
+  res.redirect(`/note?search=${jsonData[index].name}`);
+});
+
 app.post("/edit", function (req, res) {
   newText = req.body.newText;
   existingText = req.body.existingText;
@@ -64,6 +81,53 @@ app.post("/edit", function (req, res) {
   fs.writeFileSync("data/data.json", JSON.stringify(jsonData, null, 2));
 
   res.redirect(`/note?search=${jsonData[index].name}`);
+});
+
+app.post("/link", (req, res) => {
+  let links = [];
+  for (let i = 1; i <= req.body.count; i++) {
+    let path = eval("req.body.link" + i);
+    links.push(path);
+  }
+  console.log(links);
+});
+
+app.get("/delete", (req, res) => {
+  jsonData.splice(index, 1);
+  fs.writeFileSync("data/data.json", JSON.stringify(jsonData, null, 2));
+  res.redirect(`/note?search=${jsonData[0].name}`);
+
+  // let result = res.write(
+  //   `<script>window.confirm('Are you sure to delete this item? : ${jsonData[index].name}')</script>`
+  // );
+  //     );
+  // function waitForCheck(callback) {
+  //   return new Promise((resolve, reject) => {
+  //     let result = res.write(
+  //       `<script>window.confirm('Are you sure to delete this item? : ${jsonData[index].name}')</script>`
+  //     );
+  //     if (result !== undefined && result !== null) {
+  //       console.log(result);
+  //       resolve(result);
+  //     }
+  //   });
+  // }
+
+  // waitForCheck().then((result) => {
+  //   if (result) {
+  //     console.log("확인");
+  //   } else {
+  //     console.log("취소");
+  //   }
+  // });
+
+  // if (result) {
+  //   // jsonData.splice(index, 1);
+  //   // fs.writeFileSync("data/data.json", JSON.stringify(jsonData, null, 2));
+  //   res.redirect(`/note?search=${jsonData[0].name}`);
+  // } else {
+  //   res.redirect(`/note?search=${jsonData[index].name}`);
+  // }
 });
 
 // Object.keys(jsonData[index]).forEach((value) => {
